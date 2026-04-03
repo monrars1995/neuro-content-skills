@@ -221,4 +221,6 @@ Nenhuma chave necessaria. Usa a biblioteca `pytrends` (unofficial).
 
 Este projeto esta sob a licenca [MIT](LICENSE).
 
-Copyright (c) 2026 [monrars](https://github.com/monrars)
+Copyright (c) 2026 [monrars1995](https://github.com/monrars1995)
+
+Instagram: [@monrars](https://instagram.com/monrars)
