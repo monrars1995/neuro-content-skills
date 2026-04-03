@@ -1,6 +1,6 @@
 ---
 name: content-workflow
-description: "Orquestrador principal do pipeline de criacao de conteudo para midias sociais. Coordena todas as etapas: Ideias, Roteiro, Gravacao, Edicao (Remotion), Publicacao (TikTok/Instagram) e Metricas. Gerencia multiplos clientes, memoria persistente e estrutura de pastas. Use quando: criar conteudo, pipeline de video, campanha de midia social, workflow de conteudo, onboarding de cliente, status de campanha, gerenciar clientes, fluxo completo de criacao de conteudo."
+description: "Orquestrador principal do pipeline de criacao de conteudo para midias sociais. Coordena todas as etapas: Ideias, Roteiro, Gravacao, Edicao (Remotion), Publicacao (TikTok/Instagram) e Metricas. Gerencia multiplos clientes, memoria persistente e estrutura de pastas. Use quando: criar conteudo, pipeline de video, campanha de midia social, workflow de conteudo, onboarding de cliente, status de campanha, gerenciar clientes, fluxo completo de criacao de conteudo. Comandos: /cliente-setup, /nova-campanha, /status, /continuar."
 ---
 
 # Content Workflow - Pipeline Completo de Criacao de Conteudo
@@ -36,33 +36,64 @@ Orquestra o pipeline de 6 etapas para criacao de conteudo em midias sociais.
 | content-publishing | Publicacao via TikTok/Instagram API | Publicar, agendar |
 | content-metrics | Analise de performance | Metricas, relatorios |
 
-## Comandos
+## Slash Commands
 
-### `novo cliente` - Onboarding Completo
-1. Perguntar nome do cliente
-2. Perguntar nicho/segmento
-3. Perguntar plataformas (TikTok, Instagram, YouTube Shorts)
-4. Perguntar frequencia de publicacao
-5. Perguntar tom de voz e estilo
-6. Criar estrutura de pastas (content-fs)
-7. Inicializar contexto e historico (content-memory)
-8. Perguntar se quer configurar APIs agora (content-publishing)
+### `/cliente-setup [nome]` - Onboarding Completo de Cliente
+Aciona quando usuario digita `/cliente-setup` ou `/cliente-setup <nome>`.
+1. Se nome nao fornecido, perguntar: "Qual o nome do cliente?"
+2. Verificar se cliente ja existe em ~/conteudo/campanhas/
+3. Se existe, perguntar: "Cliente ja encontrado. Deseja atualizar as configuracoes?"
+4. Se novo, iniciar onboarding interativo:
+   - "Qual o nicho/segmento do cliente?" (ex: fitness, finanzas, gastronomia, educacao)
+   - "Quais plataformas vai publicar?" (TikTok, Instagram Reels, YouTube Shorts, todas)
+   - "Qual a frequencia de publicacao?" (diaria, 3x semana, semanal, quinzenal)
+   - "Qual o tom de voz?" (educativo, humor, inspiracional, provocativo, vendas)
+   - "Qual o CTA principal padrao?" (siga, comente, salve, link na bio)
+   - "Quais horarios preferidos para publicacao?"
+5. Criar estrutura de pastas completa (content-fs)
+6. Inicializar contexto.json e historico.json (content-memory)
+7. Perguntar: "Deseja configurar as APIs de publicacao agora? (TikTok, Instagram)"
+8. Se sim, guiar setup de cada API (content-publishing)
+9. Resumo final: "Cliente `{nome}` configurado com sucesso! Pasta: ~/conteudo/campanhas/{nome}/"
 
-### `nova campanha` - Iniciar Pipeline
-1. Carregar contexto do cliente (content-memory)
-2. Resumo do cliente: nicho, preferencias, metricas recentes
-3. Perguntar tipo de conteudo (post organic, anuncio, serie)
-4. Iniciar pipeline na etapa 1 (Ideias)
+### `/nova-campanha [cliente]` - Iniciar Pipeline de Conteudo
+Aciona quando usuario digita `/nova-campanha` ou `/nova-campanha <cliente>`.
+1. Se cliente nao fornecido, listar clientes disponiveis e pedir selecao
+2. Carregar contexto do cliente (content-memory)
+3. Exibir resumo: nicho, plataformas, tom, frequencia, metricas recentes
+4. Perguntar tipo de conteudo:
+   - Post organico (feed/reels)
+   - Criativo para anuncio
+   - Serie de conteudo (3+ videos)
+   - Conteudo sazonal (datas comemorativas)
+5. Confirmar e iniciar pipeline na etapa 1 (Ideias)
+6. A cada etapa concluida, perguntar: "Deseja avancar para a proxima etapa?"
 
-### `status` - Status do Pipeline
-1. Listar clientes com campanhas ativas
-2. Para cada: etapa atual, conteudos em cada fase, metricas recentes
-3. Sugerir proximas acoes
+### `/status` - Painel de Status
+Aciona quando usuario digita `/status`.
+1. Escanear ~/conteudo/campanhas/ para todos os clientes
+2. Para cada cliente, exibir:
+   ```
+   📁 {cliente} ({nicho})
+   ├── 📝 Ideias pendentes: X
+   ├── 📜 Roteiros prontos: X
+   ├── 🎬 Gravacoes brutos: X
+   ├── ✂️ Editados prontos: X
+   ├── 🚀 Publicados esta semana: X
+   ├── 📊 Metricas avg: X% engajamento | X% retencao 3s
+   └── 📍 Etapa atual: [etapa]
+   ```
+3. Sugerir proximas acoes por cliente
+4. Destacar clientes sem atividade recente (>7 dias)
 
-### `continuar [cliente]` - Retomar Pipeline
-1. Carregar contexto do cliente
-2. Identificar ultima etapa concluida
-3. Retomar da proxima etapa pendente
+### `/continuar [cliente]` - Retomar Pipeline
+Aciona quando usuario digita `/continuar` ou `/continuar <cliente>`.
+1. Se cliente nao fornecido, listar clientes com pipeline ativo
+2. Carregar contexto do cliente
+3. Identificar ultima etapa concluida via historico.json
+4. Resumir o que ja foi feito
+5. Perguntar: "Deseja retomar de [proxima etapa]?"
+6. Se sim, iniciar workflow dessa etapa
 
 ## Fluxo de Uma Campanha
 

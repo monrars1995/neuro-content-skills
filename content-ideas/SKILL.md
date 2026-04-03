@@ -1,6 +1,6 @@
 ---
 name: content-ideas
-description: "Captacao de ideias e pesquisa de trends para conteudo. Integra com TikTok Trends API, Google Trends e analise de trends do Instagram. Pesquisa referencias, analise concorrencia e gera banco de ideias. Use quando: pesquisar trends, buscar ideias de conteudo, analisar trends do tiktok, consultar google trends, encontrar referencias, criar banco de ideias, pesquisar concorrentes."
+description: "Captacao de ideias e pesquisa de trends para conteudo. Integra com TikTok Trends API, Google Trends e analise de trends do Instagram. Pesquisa referencias, analise concorrencia e gera banco de ideias. Use quando: pesquisar trends, buscar ideias de conteudo, analisar trends do tiktok, consultar google trends, encontrar referencias, criar banco de ideias, pesquisar concorrentes. Comandos: /trends, /ideias, /concorrentes."
 ---
 
 # Content Ideas - Pesquisa de Tendencias e Ideias

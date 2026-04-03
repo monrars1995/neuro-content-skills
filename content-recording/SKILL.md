@@ -1,6 +1,6 @@
 ---
 name: content-recording
-description: "Planejamento e orientacao de gravacao de videos para midias sociais. Organiza takes, orienta sobre iluminacao, enquadramento e equipamentos. Gera checklist de gravacao e guias por cena. Use quando: planejar gravacao, organizar takes, checklist de equipamento, orientar iluminacao, preparar cenas, listar gravacoes pendentes."
+description: "Planejamento e orientacao de gravacao de videos para midias sociais. Organiza takes, orienta sobre iluminacao, enquadramento e equipamentos. Gera checklist de gravacao e guias por cena. Use quando: planejar gravacao, organizar takes, checklist de equipamento, orientar iluminacao, preparar cenas, listar gravacoes pendentes. Comandos: /gravar, /plano-gravacao, /checklist."
 ---
 
 # Content Recording

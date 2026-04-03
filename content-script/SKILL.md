@@ -1,6 +1,6 @@
 ---
 name: content-script
-description: "Roteirizacao de videos para midias sociais com framework Hook-Desenvolvimento-CTA. Cria roteiros estruturados com gancho nos primeiros 3 segundos, desenvolvimento do conteudo e chamada para acao. Use quando: criar roteiro, escrever script de video, estruturar video, criar hook, escrever CTA, planejar conteudo."
+description: "Roteirizacao de videos para midias sociais com framework Hook-Desenvolvimento-CTA. Cria roteiros estruturados com gancho nos primeiros 3 segundos, desenvolvimento do conteudo e chamada para acao. Use quando: criar roteiro, escrever script de video, estruturar video, criar hook, escrever CTA, planejar conteudo. Comandos: /roteiro, /hook, /cta."
 ---
 
 # Content Script - Roteirizacao de Videos

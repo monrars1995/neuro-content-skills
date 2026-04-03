@@ -1,6 +1,6 @@
 ---
 name: content-metrics
-description: "Analise de metricas de performance de conteudo publicado. Coleta dados de retencao, engajamento, alcance e conversao via APIs das plataformas. Gera relatorios e insights para otimizar futuras publicacoes. Use quando: analisar metricas, ver performance, relatorio de conteudo, retencao do publico, engajamento, alcance, insights de performance, comparar videos."
+description: "Analise de metricas de performance de conteudo publicado. Coleta dados de retencao, engajamento, alcance e conversao via APIs das plataformas. Gera relatorios e insights para otimizar futuras publicacoes. Use quando: analisar metricas, ver performance, relatorio de conteudo, retencao do publico, engajamento, alcance, insights de performance, comparar videos. Comandos: /metricas, /relatorio, /insights."
 ---
 
 # Content Metrics - Analise de Performance de Conteudo

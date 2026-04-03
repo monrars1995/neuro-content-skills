@@ -1,6 +1,6 @@
 ---
 name: content-editing
-description: "Edicao de video usando Remotion com Next.js e TypeScript. Montagem automatica e manual de videos, aplicacao de templates, overlays, texto animado, transicoes e exportacao. Use quando: editar video, montar video com remotion, aplicar template, adicionar legendas, criar transicoes, exportar video, renderizar com remotion."
+description: "Edicao de video usando Remotion com Next.js e TypeScript. Montagem automatica e manual de videos, aplicacao de templates, overlays, texto animado, transicoes e exportacao. Use quando: editar video, montar video com remotion, aplicar template, adicionar legendas, criar transicoes, exportar video, renderizar com remotion. Comandos: /editar, /render, /legendas, /template."
 ---
 
 # Content Editing

@@ -1,6 +1,6 @@
 ---
 name: content-fs
-description: "Gerencia estrutura de pastas e organizacao de arquivos de midia para campanhas de conteudo. Cria diretorios de clientes, organiza arquivos .mp4 .mov .png .jpg, analisa conteudos existentes para reuso. Use quando: criar campanha, organizar arquivos, analisar midia, verificar estrutura de pastas, listar conteudo de cliente, mover arquivos de midia."
+description: "Gerencia estrutura de pastas e organizacao de arquivos de midia para campanhas de conteudo. Cria diretorios de clientes, organiza arquivos .mp4 .mov .png .jpg, analisa conteudos existentes para reuso. Use quando: criar campanha, organizar arquivos, analisar midia, verificar estrutura de pastas, listar conteudo de cliente, mover arquivos de midia. Comandos: /organizar, /listar-midias, /analisar-midia."
 ---
 
 # content-fs

@@ -1,6 +1,6 @@
 ---
 name: content-memory
-description: "Sistema de memoria persistente para criacao de conteudo. Armazena preferencias do cliente, historico de performance, historias (pontos importantes aprendidos), dados de metricas e contexto de sessoes anteriores. Use quando: lembrar preferencias, consultar historico, salvar aprendizados, analisar performance passada, carregar contexto de cliente."
+description: "Sistema de memoria persistente para criacao de conteudo. Armazena preferencias do cliente, historico de performance, historias (pontos importantes aprendidos), dados de metricas e contexto de sessoes anteriores. Use quando: lembrar preferencias, consultar historico, salvar aprendizados, analisar performance passada, carregar contexto de cliente. Comandos: /lembrar, /historico, /stories, /contexto."
 ---
 
 # content-memory

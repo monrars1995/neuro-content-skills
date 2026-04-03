@@ -1,6 +1,6 @@
 ---
 name: content-publishing
-description: "Publicacao e agendamento de videos em TikTok e Instagram via API. Integra com TikTok Content Posting API e Instagram Graph API para postagem/agendamento automatico de Reels e videos curtos. Use quando: publicar video, agendar post, postar no tiktok, postar no instagram, subir reel, agendar conteudo, configurar api de publicacao."
+description: "Publicacao e agendamento de videos em TikTok e Instagram via API. Integra com TikTok Content Posting API e Instagram Graph API para postagem/agendamento automatico de Reels e videos curtos. Use quando: publicar video, agendar post, postar no tiktok, postar no instagram, subir reel, agendar conteudo, configurar api de publicacao. Comandos: /publicar, /agendar, /setup-api."
 ---
 
 # Content Publishing - Publicacao de Conteudo via API
