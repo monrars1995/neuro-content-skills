@@ -26,6 +26,7 @@ Variaveis necessarias por API:
 
 - **TikTok Content Posting API**: `TIKTOK_ACCESS_TOKEN`, `TIKTOK_BUSINESS_ID`
 - **TikTok Trend API**: `TIKTOK_RESEARCH_API_KEY`
+- **TikTok Metrics**: `TIKTOK_USERNAME` (necessario para coletar metricas do perfil)
 - **Google Trends**: `GOOGLE_TRENDS_GEO` (padrao: BR), `GOOGLE_TRENDS_LANG` (padrao: pt)
 - **Meta Ads Library API**: `META_ACCESS_TOKEN`, `META_AD_ACCOUNT_ID`
 

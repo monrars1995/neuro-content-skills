@@ -37,6 +37,7 @@ def load_env(cliente: str) -> dict:
         "tiktok_research_key": os.getenv("TIKTOK_RESEARCH_API_KEY", ""),
         "tiktok_access_token": os.getenv("TIKTOK_ACCESS_TOKEN", ""),
         "tiktok_business_id": os.getenv("TIKTOK_BUSINESS_ID", ""),
+        "tiktok_username": os.getenv("TIKTOK_USERNAME", ""),
         "meta_access_token": os.getenv("META_ACCESS_TOKEN", ""),
         "meta_ad_account_id": os.getenv("META_AD_ACCOUNT_ID", ""),
         "google_trends_geo": os.getenv("GOOGLE_TRENDS_GEO", "BR"),

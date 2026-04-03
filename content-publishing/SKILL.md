@@ -24,10 +24,11 @@ Ao configurar publicacao para um cliente:
 5. Gere um Access Token com scopes: `video.upload`, `video.publish`
 6. Anote: `TIKTOK_ACCESS_TOKEN` e `TIKTOK_APP_ID`
 7. Salve no `.env.cliente`:
-   ```
-   TIKTOK_ACCESS_TOKEN=seu_token_aqui
-   TIKTOK_APP_ID=seu_app_id_aqui
-   ```
+    ```
+    TIKTOK_ACCESS_TOKEN=seu_token_aqui
+    TIKTOK_APP_ID=seu_app_id_aqui
+    TIKTOK_USERNAME=username_do_perfil
+    ```
 
 ## Setup Tutorial - Instagram Graph API (via Facebook)
 
@@ -116,5 +117,10 @@ Para agendar publicacoes:
 - **Token expirado**: Guie re-autenticacao e renovacao
 - **Upload falhou**: Retry com exponential backoff (3 tentativas)
 - **Video rejeitado**: Logue o motivo, sugira correcoes (formato, duracao, conteudo)
-- **Rate limit**: Respeite headers de rate limit, aguarde antes de retry
-- **Erro de API**: Logue resposta completa para debug
+## Referencias
+
+- **Endpoints das APIs**: `references/api_endpoints.md`
+- **Setup das APIs**: `references/api_setup.md`
+- **Memoria do cliente**: content-memory (`/historico`, `/contexto`)
+- **Estrutura de pastas**: content-fs (`/organizar`)
+- **Metricas**: content-metrics (`/metricas`)

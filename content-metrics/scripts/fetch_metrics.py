@@ -47,7 +47,7 @@ def fetch_tiktok_metrics(creds: dict, start_date: str, end_date: str) -> list:
                         {
                             "operation": "IN",
                             "field_name": "username",
-                            "field_values": ["SEU_USERNAME"],
+                            "field_values": [creds.get("TIKTOK_USERNAME", "")],
                         },
                         {
                             "operation": "GE",

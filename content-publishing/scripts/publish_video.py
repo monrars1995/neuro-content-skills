@@ -180,21 +180,30 @@ def publish_instagram(creds: dict, video_path: str, caption: str) -> dict:
 def save_history(client: str, result: dict, video: str, metadata: dict):
     campaign_dir = BASE_DIR / "campanhas" / client
     history_path = campaign_dir / "historico.json"
-    history = []
+    history_data = {"entries": []}
     if history_path.exists():
-        history = json.loads(history_path.read_text())
+        raw = json.loads(history_path.read_text())
+        if isinstance(raw, list):
+            history_data["entries"] = raw
+        elif isinstance(raw, dict) and "entries" in raw:
+            history_data = raw
 
     entry = {
+        "id": f"pub_{int(time.time())}",
+        "data": time.strftime("%Y-%m-%d"),
+        "tipo": "post",
+        "titulo": metadata.get("titulo", ""),
+        "plataformas": [result["platform"]],
         "data_publicacao": time.strftime("%Y-%m-%d %H:%M:%S"),
         "video": os.path.basename(video),
-        "plataforma": result["platform"],
-        "id": result.get("publish_id") or result.get("media_id"),
+        "id_plataforma": result.get("publish_id") or result.get("media_id"),
         "url": result.get("video_url") or result.get("permalink", ""),
         "status": result["status"],
-        "metadados": metadata,
+        "metricas": {},
+        "notas": json.dumps(metadata, ensure_ascii=False),
     }
-    history.append(entry)
-    history_path.write_text(json.dumps(history, indent=2, ensure_ascii=False))
+    history_data["entries"].append(entry)
+    history_path.write_text(json.dumps(history_data, indent=2, ensure_ascii=False))
     log.info("Registro salvo em historico.json")
 
     publicados_dir = campaign_dir / "publicados"

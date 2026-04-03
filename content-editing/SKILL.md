@@ -60,6 +60,37 @@ Consulte `references/remotion_templates.md` para codigo detalhado dos componente
 
 ---
 
+## Slash Commands
+
+### `/editar [cliente]` - Editar Video
+1. Listar conteudos brutos de `~/conteudo/campanhas/{cliente}/{tipo}/brutos/`
+2. Selecionar takes com base no plano de gravacao
+3. Montar timeline com template Remotion
+4. Aplicar legendas (ver `/legendas`)
+5. Preview e ajustes
+6. Exportar video final
+
+### `/render [cliente] [template]` - Renderizar Video
+1. Selecionar composicao Remotion
+2. Definir resolucao e codec
+3. Executar render: `npx remotion render src/index.ts VideoFinal out/{titulo}.mp4 --codec h264`
+4. Salvar em `editados/`
+
+### `/legendas [video] [cliente]` - Gerar Legendas
+1. Executar `scripts/generate_subtitles.py` com o video
+2. Suporta Whisper local ou OpenAI API (verifica OPENAI_API_KEY no .env.cliente)
+3. Gera saida nos formatos: SRT, JSON, Remotion JSON
+4. Exemplo:
+   ```bash
+   python3 scripts/generate_subtitles.py --video brutos/video.mp4 --cliente joao --formato todos
+   ```
+5. Incluir legendas na composicao Remotion (componente WordByWordSubtitle)
+
+### `/template [cliente]` - Listar/Gerar Templates
+1. Listar templates disponiveis em `references/remotion_templates.md`
+2. Sugira template com base no tipo de conteudo e plataforma
+3. Gere novo template se necessario
+
 ## Workflow de Edicao
 
 1. **Analisar bruto** — Extraia metadata (duracao, resolucao) com `ffprobe`
@@ -117,5 +148,8 @@ Salve videos editados em:
 
 ## Referencias
 
-- `references/remotion_templates.md` — componentes Remotion detalhados
-- `scripts/setup_remotion.sh` — setup automatizado do projeto
+- `references/remotion_templates.md` - componentes Remotion detalhados
+- `scripts/setup_remotion.sh` - setup automatizado do projeto
+- `scripts/generate_subtitles.py` - geracao automatica de legendas (Whisper)
+- **Gravacoes brutas**: content-recording (`/plano-gravacao`)
+- **Publicacao**: content-publishing (`/publicar`)

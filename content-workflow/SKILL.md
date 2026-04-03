@@ -10,6 +10,8 @@ Orquestra o pipeline de 6 etapas para criacao de conteudo em midias sociais.
 ## Etapas do Pipeline
 
 ```
+0. PLANEJAMENTO EDITORIAL (content-editorial)
+   ↓
 1. IDEIAS (content-ideas)
    ↓
 2. ROTEIRO (content-script)
@@ -29,6 +31,7 @@ Orquestra o pipeline de 6 etapas para criacao de conteudo em midias sociais.
 |-------|--------|---------|
 | content-fs | Estrutura de pastas e organizacao de midia | Criar campanha, organizar arquivos |
 | content-memory | Memoria persistente e contexto do cliente | Lembrar preferencias, historico |
+| content-editorial | Linha editorial e calendario de conteudo | Criar calendario, planejar conteudo |
 | content-ideas | Pesquisa de trends e captacao de ideias | Buscar ideias, trends |
 | content-script | Roteirizacao Hook-Desenvolvimento-CTA | Criar roteiro, script |
 | content-recording | Planejamento de gravacao | Preparar gravacao, takes |
@@ -96,6 +99,12 @@ Aciona quando usuario digita `/continuar` ou `/continuar <cliente>`.
 6. Se sim, iniciar workflow dessa etapa
 
 ## Fluxo de Uma Campanha
+
+### Etapa 0: Planejamento Editorial
+- Verificar se existe linha editorial para o cliente (content-editorial)
+- Se nao existe, sugerir `/create-linha-editorial`
+- Se existe, carregar calendario editorial atual
+- Alinhar conteudo do pipeline com o calendario
 
 ### Etapa 1: Ideias
 - Carregar trends recentes (content-ideas)

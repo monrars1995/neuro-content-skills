@@ -142,4 +142,7 @@ Estrutura de saida sugerida:
 
 ## Referencias
 
-Consulte `references/equipment_guide.md` para recomendacoes de equipamento por faixa de preco.
+- **Guia de equipamentos**: `references/equipment_guide.md`
+- **Roteiros disponiveis**: content-script (`/roteiro`)
+- **Estrutura de pastas**: content-fs (`/organizar`)
+- **Edicao**: content-editing (`/editar`)

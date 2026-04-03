@@ -179,3 +179,24 @@ Retorne insights em formato conciso com recomendacoes.
 - Use `jq` para manipulacao de JSON quando disponivel
 - Ao carregar contexto, pergunte se ha atualizacoes necessarias
 - Ao receber metricas novas, compare automaticamente com historico
+
+## Scripts
+
+### validate_schema.py
+
+Localizado em `scripts/validate_schema.py`.
+
+Valida os schemas de `contexto.json` e `historico.json` de um cliente.
+
+Uso:
+```bash
+python3 scripts/validate_schema.py --cliente "joao-academia"
+python3 scripts/validate_schema.py --cliente "joao-academia" --fix
+```
+
+O script:
+- Verifica campos obrigatorios em contexto.json e historico.json
+- Valida formatos de data (YYYY-MM-DD)
+- Valida valores permitidos (tipo: post/anuncio/story, relevancia: alta/media/baixa)
+- Com `--fix`, corrige automaticamente problemas simples (ex: envelopar array em {"entries": [...]})
+- Retorna codigo 0 se tudo valido, 1 se ha erros

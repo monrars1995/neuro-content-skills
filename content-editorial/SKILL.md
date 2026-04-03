@@ -202,8 +202,8 @@ Salvar em `~/conteudo/campanhas/{cliente}/briefings/calendario_{YYYY}_{MM}.md`:
 1. Micro-aulas (40%)
 2. Dicas de Estudo (25%)
 3. Motivacao e Mentalidade (20%)
-6. Ferramentas e Apps (10%)
-7. Resultados e Cases (5%)
+4. Ferramentas e Apps (10%)
+5. Resultados e Cases (5%)
 
 ## Referencias
 

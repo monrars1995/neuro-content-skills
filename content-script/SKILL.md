@@ -123,3 +123,10 @@ Gere 2 opcoes alternativas de hook para o mesmo roteiro, usando tipos diferentes
 4. Gere o roteiro seguindo o template
 5. Execute o script enhancement
 6. Salve o roteiro final
+
+## Referencias
+
+- **Banco de ideias**: content-ideas (`/trends`, `/ideias`)
+- **Memoria do cliente**: content-memory (`/contexto`)
+- **Estrutura de pastas**: content-fs (`/organizar`)
+- **Planejamento de gravacao**: content-recording (`/gravar`, `/plano-gravacao`)
