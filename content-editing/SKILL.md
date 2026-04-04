@@ -152,4 +152,7 @@ Salve videos editados em:
 - `scripts/setup_remotion.sh` - setup automatizado do projeto
 - `scripts/generate_subtitles.py` - geracao automatica de legendas (Whisper)
 - **Gravacoes brutas**: content-recording (`/plano-gravacao`)
+- **Edicao dopaminergica**: content-remotion (`/dopamina`, `/legendas-dinamicas`, `/zoom`)
+- **Cortes virais**: content-cuts (`/analisar`, `/cortar`, `/pontuar`)
+- **Audio e musica**: content-audio (`/voz`, `/musica`, `/mixar`)
 - **Publicacao**: content-publishing (`/publicar`)

@@ -124,3 +124,6 @@ Para agendar publicacoes:
 - **Memoria do cliente**: content-memory (`/historico`, `/contexto`)
 - **Estrutura de pastas**: content-fs (`/organizar`)
 - **Metricas**: content-metrics (`/metricas`)
+- **Cortes virais**: content-cuts (`/analisar`, `/cortar`, `/pontuar`)
+- **Edicao dopaminergica**: content-remotion (`/dopamina`, `/legendas-dinamicas`)
+- **Audio**: content-audio (`/voz`, `/musica`, `/mixar`)
