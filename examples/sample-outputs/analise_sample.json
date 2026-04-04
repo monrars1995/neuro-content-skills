@@ -1,0 +1,60 @@
+{
+  "video": "podcast_ep01.mp4",
+  "caminho": "~/conteudo/campanhas/joao/brutos/podcast_ep01.mp4",
+  "metadata": {
+    "duracao": 362.5,
+    "resolucao": "1920x1080",
+    "fps": 30,
+    "bitrate": 4500000,
+    "codec_video": "h264",
+    "codec_audio": "aac",
+    "tem_audio": true,
+    "canais_audio": 2
+  },
+  "silencios": [
+    { "start": 12.3, "end": 13.8, "duracao": 1.5 },
+    { "start": 28.1, "end": 29.2, "duracao": 1.1 },
+    { "start": 45.0, "end": 45.7, "duracao": 0.7 },
+    { "start": 67.2, "end": 68.5, "duracao": 1.3 },
+    { "start": 89.0, "end": 90.1, "duracao": 1.1 },
+    { "start": 112.5, "end": 113.8, "duracao": 1.3 },
+    { "start": 134.0, "end": 136.2, "duracao": 2.2 },
+    { "start": 178.3, "end": 179.0, "duracao": 0.7 },
+    { "start": 201.1, "end": 202.8, "duracao": 1.7 },
+    { "start": 234.0, "end": 235.5, "duracao": 1.5 },
+    { "start": 256.7, "end": 258.0, "duracao": 1.3 },
+    { "start": 289.4, "end": 291.0, "duracao": 1.6 },
+    { "start": 312.0, "end": 313.5, "duracao": 1.5 },
+    { "start": 345.0, "end": 346.2, "duracao": 1.2 }
+  ],
+  "cenas": [
+    { "timestamp": 34.5, "tipo": "hard_cut" },
+    { "timestamp": 120.3, "tipo": "hard_cut" },
+    { "timestamp": 198.7, "tipo": "hard_cut" },
+    { "timestamp": 245.1, "tipo": "fade" },
+    { "timestamp": 310.0, "tipo": "hard_cut" }
+  ],
+  "loudness": {
+    "input_i": -16.2,
+    "input_tp": -2.1,
+    "input_lra": 12.8,
+    "target_i": -14.0,
+    "target_tp": -1.0,
+    "target_lra": 11.0
+  },
+  "trechos_interessantes": [
+    { "start": 15.0, "end": 45.0, "duracao": 30.0, "motivo": "trecho_longo_com_potencial", "silencios_no_trecho": 1 },
+    { "start": 67.2, "end": 112.0, "duracao": 44.8, "motivo": "trecho_continuo", "silencios_no_trecho": 2 },
+    { "start": 134.0, "end": 178.0, "duracao": 44.0, "motivo": "trecho_longo_com_potencial", "silencios_no_trecho": 1 },
+    { "start": 201.1, "end": 245.0, "duracao": 43.9, "motivo": "trecho_continuo", "silencios_no_trecho": 2 },
+    { "start": 256.7, "end": 310.0, "duracao": 53.3, "motivo": "trecho_continuo", "silencios_no_trecho": 1 },
+    { "start": 312.0, "end": 362.5, "duracao": 50.5, "motivo": "trecho_final", "silencios_no_trecho": 2 }
+  ],
+  "resumo": {
+    "total_silencios": 14,
+    "duracao_total_silencios": 22.7,
+    "razao_fala": 0.937,
+    "total_cenas": 5,
+    "trechos_sugeridos": 6
+  }
+}

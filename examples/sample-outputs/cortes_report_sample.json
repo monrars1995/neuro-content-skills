@@ -1,0 +1,75 @@
+{
+  "video_origem": "podcast_ep01.mp4",
+  "plataforma": "shorts",
+  "max_duracao": 45,
+  "cortes": [
+    {
+      "arquivo": "podcast_ep01_corte_01.mp4",
+      "caminho": "~/conteudo/campanhas/joao/posts-midias-sociais/editados/podcast_ep01_corte_01.mp4",
+      "start": 15.0,
+      "end": 45.0,
+      "duracao_original": 30.0,
+      "score": 25,
+      "plataforma": "shorts",
+      "resolucao": "1080x1920",
+      "sucesso": true
+    },
+    {
+      "arquivo": "podcast_ep01_corte_02.mp4",
+      "caminho": "~/conteudo/campanhas/joao/posts-midias-sociais/editados/podcast_ep01_corte_02.mp4",
+      "start": 67.2,
+      "end": 112.0,
+      "duracao_original": 44.8,
+      "score": 22,
+      "plataforma": "shorts",
+      "resolucao": "1080x1920",
+      "sucesso": true
+    },
+    {
+      "arquivo": "podcast_ep01_corte_03.mp4",
+      "caminho": "~/conteudo/campanhas/joao/posts-midias-sociais/editados/podcast_ep01_corte_03.mp4",
+      "start": 134.0,
+      "end": 178.0,
+      "duracao_original": 44.0,
+      "score": 23,
+      "plataforma": "shorts",
+      "resolucao": "1080x1920",
+      "sucesso": true
+    },
+    {
+      "arquivo": "podcast_ep01_corte_04.mp4",
+      "caminho": "~/conteudo/campanhas/joao/posts-midias-sociais/editados/podcast_ep01_corte_04.mp4",
+      "start": 201.1,
+      "end": 245.0,
+      "duracao_original": 43.9,
+      "score": 21,
+      "plataforma": "shorts",
+      "resolucao": "1080x1920",
+      "sucesso": true
+    },
+    {
+      "arquivo": "podcast_ep01_corte_05.mp4",
+      "caminho": "~/conteudo/campanhas/joao/posts-midias-sociais/editados/podcast_ep01_corte_05.mp4",
+      "start": 256.7,
+      "end": 310.0,
+      "duracao_original": 53.3,
+      "score": 18,
+      "plataforma": "shorts",
+      "resolucao": "1080x1920",
+      "sucesso": true
+    },
+    {
+      "arquivo": "podcast_ep01_corte_06.mp4",
+      "caminho": "~/conteudo/campanhas/joao/posts-midias-sociais/editados/podcast_ep01_corte_06.mp4",
+      "start": 312.0,
+      "end": 362.5,
+      "duracao_original": 50.5,
+      "score": 19,
+      "plataforma": "shorts",
+      "resolucao": "1080x1920",
+      "sucesso": true
+    }
+  ],
+  "total_cortes": 6,
+  "cortes_sucesso": 6
+}

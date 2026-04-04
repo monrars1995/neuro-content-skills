@@ -1,0 +1,48 @@
+{
+  "video": "corte_01.mp4",
+  "caminho": "~/conteudo/campanhas/joao/posts-midias-sociais/editados/corte_01.mp4",
+  "duracao": 42.5,
+  "resolucao": "1080x1920",
+  "pontuacao": {
+    "total": 74,
+    "max": 100,
+    "classificacao": "alto_potencial"
+  },
+  "categorias": {
+    "hook": {
+      "pontuacao": 20,
+      "max": 25,
+      "feedback": ["Duracao otima para hook rapido", "Video comecou com impacto"]
+    },
+    "pacing": {
+      "pontuacao": 16,
+      "max": 20,
+      "feedback": ["Bom ritmo - poucos silencios", "~25 cortes/minuto estimados"]
+    },
+    "engajamento": {
+      "pontuacao": 8,
+      "max": 20,
+      "feedback": ["Nota base: sem analise de transcricao", "Para pontuacao completa, gere legendas"]
+    },
+    "formato": {
+      "pontuacao": 13,
+      "max": 15,
+      "feedback": ["Formato vertical 9:16 correto", "Resolucao HD"]
+    },
+    "audio": {
+      "pontuacao": 7,
+      "max": 10,
+      "feedback": ["LUFS aceitavel: -16.2", "True peak seguro: -2.1 dBTP"]
+    },
+    "cta": {
+      "pontuacao": 5,
+      "max": 10,
+      "feedback": ["Nota base: sem analise do final", "Para pontuacao completa, gere legendas"]
+    }
+  },
+  "sugestoes": [
+    "1. Adicione pergunta direta no CTA para engajamento (+4 pts)",
+    "2. Gere legendas word-by-word para retention (+4 pts)",
+    "3. Normalize audio para -14 LUFS (+3 pts)"
+  ]
+}
