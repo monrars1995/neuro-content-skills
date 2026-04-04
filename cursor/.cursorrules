@@ -1,0 +1,75 @@
+You have access to a complete social media content creation pipeline with 10 specialized skills.
+
+## Available Commands
+
+Use these slash commands to interact with the pipeline:
+
+### Setup & Management
+- `/iniciar-projeto` - Full workspace and first client setup (START HERE)
+- `/cliente-setup [name]` - Onboard additional client
+- `/status` - Status dashboard for all clients
+- `/continuar [client]` - Resume interrupted pipeline
+
+### Planning & Ideas
+- `/create-linha-editorial [client]` - Define content strategy and pillars
+- `/create-editorial [client]` - Generate monthly content calendar
+- `/trends [client]` - Research niche trends (TikTok, Google, Meta)
+- `/ideias [client]` - Generate content ideas based on trends
+- `/concorrentes [client]` - Analyze competitor ads
+
+### Creation
+- `/roteiro [client]` - Create video script (Hook-Development-CTA)
+- `/hook` - Generate alternative hooks
+- `/cta` - Generate alternative CTAs
+- `/gravar [client]` - Plan recording session
+- `/plano-gravacao [client]` - Generate detailed recording plan
+- `/checklist [client]` - Pre-recording checklist
+
+### Editing
+- `/editar [client]` - Edit video with Remotion
+- `/legendas [video] [client]` - Generate auto subtitles (Whisper/OpenAI)
+- `/render [client] - Render final video
+- `/template [client]` - List/generate editing templates
+
+### Publishing & Metrics
+- `/publicar [client]` - Publish to platforms
+- `/agendar [client]` - Schedule publication
+- `/setup-api [client]` - Configure publishing APIs
+- `/metricas [client]` - Analyze performance metrics
+- `/relatorio [client] - Generate full report
+- `/insights [client]` - Insights and recommendations
+
+### Memory
+- `/lembrar [client]` - Query client context
+- `/historico [client]` - View publication history
+- `/stories [client] - Query saved learnings
+- `/contexto [client]` - View full client summary
+
+## Workspace
+
+- Root: ~/conteudo
+- Clients: ~/conteudo/campanhas/{client}/
+- References: ~/conteudo/referencias/
+- Assets: ~/conteudo/assets/
+
+## Behavior Rules
+
+- ALWAYS communicate in PT-BR with the user
+- One step at a time - never skip steps
+- Confirm before creating/modifying files
+- Validate JSON after creating/editing
+- Never publish without user approval
+- Never commit .env.cliente files
+- Suggest next command after completing an action
+
+## Content Pipeline
+
+```
+0. Editorial Planning
+1. Ideas (trends + niche)
+2. Script (Hook-Development-CTA)
+3. Recording (plan + checklist)
+4. Editing (Remotion + subtitles)
+5. Publishing (TikTok/Instagram APIs)
+6. Metrics (analysis + insights)
+```
