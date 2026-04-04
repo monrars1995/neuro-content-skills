@@ -1,0 +1,356 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+CYAN='\033[0;36m'
+GREEN='\033[0;32m'
+YELLOW='\033[1;33m'
+RED='\033[0;31m'
+BOLD='\033[1m'
+NC='\033[0m'
+
+VERSION="1.0.0"
+CONTEUDO_DIR="$HOME/conteudo"
+SKILLS_DIR="$HOME/.opencode/skills"
+AGENT_MODE=false
+
+if [[ "${1:-}" == "--agent" ]]; then
+    AGENT_MODE=true
+    shift
+fi
+
+if [[ "${1:-}" == "--version" ]]; then
+    echo "neuro-content-skills v$VERSION"
+    exit 0
+fi
+
+if [[ "${1:-}" == "--help" || "${1:-}" == "-h" || $# -eq 0 ]]; then
+    cat << 'HELP'
+
+  neuro-content-skills v1.0.0
+  CLI unificado para o pipeline de conteudo
+
+  USO:
+    neuro <comando> [args...]
+
+  COMANDOS:
+
+  Setup & Configuracao:
+    setup              Roda setup completo (deps + workspace + APIs)
+    status              Painel de status de todos os clientes
+    config <cliente>    Mostra configuracao de um cliente
+
+  Gestao de Clientes:
+    novo-cliente        Cria novo cliente (alias: nc)
+    listar-clientes     Lista todos os clientes (alias: lc)
+
+  Pipeline de Conteudo:
+    ideias <cliente>    Pesquisa trends e gera ideias
+    roteiro <cliente>   Cria roteiro Hook-Desenvolvimento-CTA
+    gravar <cliente>    Gera plano de gravacao
+    editar <cliente>    Edita video com Remotion
+    publicar <cliente>  Publica nas plataformas
+    metricas <cliente>  Analisa metricas de performance
+
+  Cortes Virais:
+    analisar <cliente>  Analisa video para pontos de corte
+    cortar <cliente>    Gera cortes otimizados
+    pontuar <cliente>   Pontua potencial viral (0-100)
+    repurpose <cliente> Repurposing multi-plataforma
+
+  Edicao Avancada:
+    dopamina <cliente>  Video dopaminergico completo
+    legendas <cliente>  Legendas word-by-word (Hormozi style)
+    zoom <cliente>      Zoom animations em palavras-chave
+
+  Audio:
+    voz <cliente>       Gerar voz AI (TTS)
+    musica <cliente>    Musica de fundo por objetivo
+    efeitos <cliente>   Efeitos sonoros
+    mixar <cliente>     Mixagem completa de audio
+    vozes               Listar vozes ElevenLabs disponiveis
+
+  Memoria:
+    contexto <cliente>  Consulta memoria do cliente
+    historico <cliente>  Ver historico de publicacoes
+
+  Flags:
+    --agent             Modo agente (saida JSON para IA)
+    --version           Versao da CLI
+    --help, -h          Esta ajuda
+
+  EXEMPLOS:
+    neuro setup
+    neuro status
+    neuro novo-cliente joao-academia
+    neuro ideias joao-academia
+    neuro cortar joao-academia
+    neuro dopamina joao-academia
+    neuro mixar joao-academia
+
+HELP
+    exit 0
+fi
+
+CMD="$1"
+shift || true
+
+cliente_arg=""
+if [[ "$CMD" != "setup" && "$CMD" != "status" && "$CMD" != "listar-clientes" && "$CMD" != "lc" && "$CMD" != "vozes" && "$CMD" != "novo-cliente" && "$CMD" != "nc" ]]; then
+    if [[ -z "${1:-}" ]]; then
+        if [ -d "$CONTEUDO_DIR/campanhas" ]; then
+            clientes=($(ls -d "$CONTEUDO_DIR/campanhas"/*/ 2>/dev/null | xargs -I{} basename {}))
+            if [ ${#clientes[@]} -eq 0 ]; then
+                echo -e "${RED}Nenhum cliente encontrado. Use 'neuro novo-cliente' para criar.${NC}"
+                exit 1
+            fi
+            echo -e "${YELLOW}Especifique o cliente:${NC}"
+            for i in "${!clientes[@]}"; do
+                echo "  $((i+1))) ${clientes[$i]}"
+            done
+            echo ""
+            read -rp "Escolha (1-${#clientes[@]}): " escolha
+            cliente_arg="${clientes[$((escolha-1))]}"
+        else
+            cliente_arg="$1"
+            shift
+        fi
+    else
+        cliente_arg="$1"
+        shift
+    fi
+fi
+
+if [[ -n "$cliente_arg" ]]; then
+    CLIENTE_DIR="$CONTEUDO_DIR/campanhas/$cliente_arg"
+    if [[ ! -d "$CLIENTE_DIR" ]]; then
+        echo -e "${RED}Cliente '$cliente_arg' nao encontrado em ~/conteudo/campanhas/${NC}"
+        echo "Use 'neuro novo-cliente' para criar."
+        exit 1
+    fi
+fi
+
+msg() { echo -e "${CYAN}${BOLD}[NEURO]${NC} $1"; }
+ok()   { echo -e "${GREEN}${BOLD}[OK]${NC} $1"; }
+warn() { echo -e "${YELLOW}[!]${NC} $1"; }
+erro() { echo -e "${RED}[X]${NC} $1"; }
+
+case "$CMD" in
+    setup)
+        msg "Rodando setup completo..."
+        bash "$SKILLS_DIR/content-workflow/scripts/setup_completo.sh"
+        ;;
+
+    status)
+        msg "Painel de Status"
+        echo ""
+        if [[ ! -d "$CONTEUDO_DIR/campanhas" ]]; then
+            warn "Nenhum cliente encontrado. Use 'neuro setup' primeiro."
+            exit 0
+        fi
+        for c_dir in "$CONTEUDO_DIR/campanhas"/*/; do
+            c=$(basename "$c_dir")
+            if [[ ! -f "$c_dir/contexto.json" ]]; then
+                warn "$c (sem contexto.json)"
+                continue
+            fi
+            nicho=$(python3 -c "import json; d=json.load(open('$c_dir/contexto.json')); print(d.get('cliente',{}).get('nicho','N/A'))" 2>/dev/null || echo "N/A")
+            ideias=$(find "$c_dir" -path "*/ideias/*" -type f 2>/dev/null | wc -l | tr -d ' ')
+            brutos=$(find "$c_dir" -path "*/brutos/*" -type f 2>/dev/null | wc -l | tr -d ' ')
+            editados=$(find "$c_dir" -path "*/editados/*" -type f 2>/dev/null | wc -l | tr -d ' ')
+            publicados=$(find "$c_dir" -path "*/publicados/*" -type f 2>/dev/null | wc -l | tr -d ' ')
+            echo -e "  ${BOLD}$c${NC} ($nicho)"
+            echo "    Ideias: $ideias | Brutos: $brutos | Editados: $editados | Publicados: $publicados"
+        done
+        ;;
+
+    config)
+        msg "Configuracao de $cliente_arg"
+        echo ""
+        echo "  Pasta: $CLIENTE_DIR"
+        if [[ -f "$CLIENTE_DIR/contexto.json" ]]; then
+            echo "  contexto.json: OK"
+            python3 -c "import json; d=json.load(open('$CLIENTE_DIR/contexto.json')); print(f'  Cliente: {d[\"cliente\"][\"nome\"]}'); print(f'  Nicho: {d[\"cliente\"][\"nicho\"]}'); print(f'  Plataformas: {d[\"cliente\"][\"plataformas\"]}'); print(f'  Tom: {d[\"cliente\"][\"tom_de_voz\"]}')" 2>/dev/null
+        fi
+        if [[ -f "$CLIENTE_DIR/.env.cliente" ]]; then
+            echo ""
+            echo "  APIs configuradas:"
+            while IFS='=' read -r key val; do
+                key=$(echo "$key" | xargs)
+                val=$(echo "$val" | xargs)
+                if [[ -n "$val" && ! "$key" =~ ^# ]]; then
+                    masked="${val:0:8}...${val: -4}"
+                    echo "    ${GREEN}✓${NC} $key = $masked"
+                elif [[ -z "$val" && ! "$key" =~ ^# ]]; then
+                    echo "    ${RED}✗${NC} $key = (vazio)"
+                fi
+            done < "$CLIENTE_DIR/.env.cliente"
+        fi
+        ;;
+
+    novo-cliente|nc)
+        msg "Criando novo cliente..."
+        echo ""
+        read -rp "Nome do cliente (slug, ex: joao-academia): " nome
+        nome=$(echo "$nome" | tr '[:upper:]' '[:lower:]' | tr -s ' ' '-' | tr -cd 'a-z0-9-_')
+        if [[ -z "$nome" ]]; then
+            erro "Nome invalido"
+            exit 1
+        fi
+        read -rp "Nicho (ex: fitness, financas): " nicho
+        echo ""
+        msg "Criando estrutura para '$nome'..."
+        BASE="$CONTEUDO_DIR/campanhas/$nome"
+        mkdir -p "$BASE"/{posts-midias-sociais/{ideias,roteiros,brutos,editados,publicados}}
+        mkdir -p "$BASE"/{criativos-anuncios/{ideias,roteiros,brutos,editados,publicados}}
+        mkdir -p "$BASE"/{briefings,metricas}
+        python3 -c "
+import json
+ctx = {
+    'cliente': {'nome': '$nome', 'nicho': '$nicho', 'plataformas': [], 'tom_de_voz': '', 'cta_padrao': '', 'horarios_melhores': []},
+    'preferencias': {},
+    'stories': [],
+    'metricas_resumo': {'total_publicados': 0, 'avg_retention': '0%', 'avg_engagement': '0%', 'melhor_horario': '', 'ultima_atualizacao': ''}
+}
+json.dump(ctx, open('$BASE/contexto.json', 'w'), indent=2, ensure_ascii=False)
+json.dump({'entries': []}, open('$BASE/historico.json', 'w'), indent=2)
+" 2>/dev/null
+        touch "$BASE/.env.cliente"
+        cp "$CONTEUDO_DIR/templates/env.cliente.template" "$BASE/.env.cliente" 2>/dev/null || true
+        if [ -f "$CONTEUDO_DIR/.gitignore" ]; then
+            grep -qxF '.env.cliente' "$CONTEUDO_DIR/.gitignore" 2>/dev/null || echo '.env.cliente' >> "$CONTEUDO_DIR/.gitignore"
+        fi
+        ok "Cliente '$nome' criado em $BASE"
+        echo ""
+        echo "  Proximos passos:"
+        echo "    neuro config $nome        # Ver configuracao"
+        echo "    neuro ideias $nome        # Pesquisar trends"
+        echo "    neuro roteiro $nome       # Criar roteiro"
+        ;;
+
+    ideias)
+        msg "Pesquisando trends para $cliente_arg..."
+        python3 "$SKILLS_DIR/content-ideas/scripts/fetch_trends.py" --nicho "$(python3 -c "import json; print(json.load(open('$CLIENTE_DIR/contexto.json'))['cliente']['nicho'])" 2>/dev/null)" --cliente "$cliente_arg" "$@" || true
+        ;;
+
+    roteiro)
+        msg "Criando roteiro para $cliente_arg..."
+        echo "Abra o agente de IA e use: /roteiro $cliente_arg"
+        ;;
+
+    gravar)
+        msg "Gerando plano de gravacao para $cliente_arg..."
+        echo "Abra o agente de IA e use: /gravar $cliente_arg"
+        ;;
+
+    analisar)
+        msg "Analisando videos de $cliente_arg..."
+        echo "Videos em brutos/:"
+        find "$CLIENTE_DIR" -path "*/brutos/*" \( -name "*.mp4" -o -name "*.mov" \) -type f 2>/dev/null | while read -r f; do
+            echo "  - $f"
+        done
+        echo ""
+        echo "Use: python3 $SKILLS_DIR/content-cuts/scripts/analyze_video.py --video ARQUIVO --cliente $cliente_arg"
+        ;;
+
+    cortar)
+        msg "Gerando cortes para $cliente_arg..."
+        echo "Use: python3 $SKILLS_DIR/content-cuts/scripts/smart_cut.py --video ARQUIVO --cliente $cliente_arg --plataforma reels"
+        ;;
+
+    pontuar)
+        msg "Pontuando video de $cliente_arg..."
+        echo "Use: python3 $SKILLS_DIR/content-cuts/scripts/score_video.py --video ARQUIVO --cliente $cliente_arg"
+        ;;
+
+    repurpose)
+        msg "Repurposing conteudo de $cliente_arg..."
+        echo "Abra o agente de IA e use: /repurpose $cliente_arg"
+        ;;
+
+    dopamina)
+        msg "Criando video dopaminergico para $cliente_arg..."
+        echo "Use: python3 $SKILLS_DIR/content-remotion/scripts/generate_dopamine_comp.py --video ARQUIVO --cliente $cliente_arg"
+        ;;
+
+    legendas)
+        msg "Gerando legendas word-by-word para $cliente_arg..."
+        echo "Use: python3 $SKILLS_DIR/content-remotion/scripts/generate_subtitle_comp.py --video ARQUIVO --cliente $cliente_arg --estilo hormozi"
+        ;;
+
+    zoom)
+        msg "Gerando zoom animations para $cliente_arg..."
+        echo "Use: python3 $SKILLS_DIR/content-remotion/scripts/generate_zoom_comp.py --video ARQUIVO --cliente $cliente_arg"
+        ;;
+
+    voz)
+        msg "Gerando voz AI para $cliente_arg..."
+        echo "Use: python3 $SKILLS_DIR/content-audio/scripts/elevenlabs_tts.py --arquivo ARQUIVO --cliente $cliente_arg"
+        ;;
+
+    musica)
+        msg "Gerando musica de fundo para $cliente_arg..."
+        echo "Use: python3 $SKILLS_DIR/content-audio/scripts/generate_background_music.py --cliente $cliente_arg --objetivo motivacional --duracao 60"
+        ;;
+
+    efeitos)
+        msg "Gerando efeitos sonoros para $cliente_arg..."
+        echo "Use: python3 $SKILLS_DIR/content-audio/scripts/generate_effects.py --cliente $cliente_arg --efeitos 'whoosh,impact,rise'"
+        ;;
+
+    mixar)
+        msg "Mixando audio para $cliente_arg..."
+        echo "Use: python3 $SKILLS_DIR/content-audio/scripts/mix_audio.py --video ARQUIVO --cliente $cliente_arg --voz VOZ.mp3 --musica MUSICA.mp3"
+        ;;
+
+    vozes)
+        msg "Listando vozes ElevenLabs..."
+        python3 "$SKILLS_DIR/content-audio/scripts/elevenlabs_tts.py" --listar-vozes --idioma pt "$@"
+        ;;
+
+    contexto)
+        msg "Contexto de $cliente_arg"
+        if [[ -f "$CLIENTE_DIR/contexto.json" ]]; then
+            python3 -c "import json; print(json.dumps(json.load(open('$CLIENTE_DIR/contexto.json')), indent=2, ensure_ascii=False))"
+        else
+            erro "contexto.json nao encontrado"
+        fi
+        ;;
+
+    historico)
+        msg "Historico de $cliente_arg"
+        if [[ -f "$CLIENTE_DIR/historico.json" ]]; then
+            python3 -c "import json; print(json.dumps(json.load(open('$CLIENTE_DIR/historico.json')), indent=2, ensure_ascii=False))"
+        else
+            erro "historico.json nao encontrado"
+        fi
+        ;;
+
+    editar|publicar|metricas)
+        msg "$CMD para $cliente_arg"
+        echo "Abra o agente de IA e use: /$CMD $cliente_arg"
+        ;;
+
+    listar-clientes|lc)
+        msg "Clientes cadastrados"
+        echo ""
+        if [[ ! -d "$CONTEUDO_DIR/campanhas" ]]; then
+            warn "Nenhum cliente encontrado."
+            exit 0
+        fi
+        for c_dir in "$CONTEUDO_DIR/campanhas"/*/; do
+            c=$(basename "$c_dir")
+            if [[ -f "$c_dir/contexto.json" ]]; then
+                nicho=$(python3 -c "import json; print(json.load(open('$c_dir/contexto.json'))['cliente']['nicho'])" 2>/dev/null || echo "?")
+                echo "  ${GREEN}✓${NC} $c ($nicho)"
+            else
+                echo "  ${YELLOW}?${NC} $c (sem config)"
+            fi
+        done
+        ;;
+
+    *)
+        echo -e "${RED}Comando desconhecido: $CMD${NC}"
+        echo "Use 'neuro --help' para ver os comandos disponiveis."
+        exit 1
+        ;;
+esac
