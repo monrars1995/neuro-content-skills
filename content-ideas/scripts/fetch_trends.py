@@ -10,20 +10,12 @@ from pathlib import Path
 try:
     import requests
 except ImportError:
-    print("Instale requests: pip3 install requests")
-    sys.exit(1)
-
-try:
-    from pytrends.request import TrendReq
-except ImportError:
-    print("Instale pytrends: pip3 install pytrends")
-    sys.exit(1)
+    requests = None
 
 try:
     from dotenv import load_dotenv
 except ImportError:
-    print("Instale python-dotenv: pip3 install python-dotenv")
-    sys.exit(1)
+    load_dotenv = None
 
 
 def load_env(cliente: str) -> dict:
@@ -80,6 +72,13 @@ def fetch_tiktok_trends(env: dict, nicho: str) -> list:
 def fetch_google_trends(env: dict, nicho: str) -> list:
     trends = []
     try:
+        try:
+            from pytrends.request import TrendReq
+        except ImportError:
+            print(
+                "[Google Trends] pytrends nao instalado. Instale: pip3 install pytrends"
+            )
+            return []
         pytrends = TrendReq(
             hl=env["google_trends_lang"],
             tz=180,

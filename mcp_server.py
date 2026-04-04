@@ -41,10 +41,23 @@ TOOLS = [
         "inputSchema": {
             "type": "object",
             "properties": {
-                "nome": {"type": "string", "description": "Slug do cliente (ex: joao-academia)"},
-                "nicho": {"type": "string", "description": "Nicho/segmento (ex: fitness, financas)"},
-                "plataformas": {"type": "array", "items": {"type": "string"}, "description": "Lista de plataformas (tiktok, instagram, youtube)"},
-                "tom_de_voz": {"type": "string", "description": "Tom de voz (educativo, humor, inspiracional)"},
+                "nome": {
+                    "type": "string",
+                    "description": "Slug do cliente (ex: joao-academia)",
+                },
+                "nicho": {
+                    "type": "string",
+                    "description": "Nicho/segmento (ex: fitness, financas)",
+                },
+                "plataformas": {
+                    "type": "array",
+                    "items": {"type": "string"},
+                    "description": "Lista de plataformas (tiktok, instagram, youtube)",
+                },
+                "tom_de_voz": {
+                    "type": "string",
+                    "description": "Tom de voz (educativo, humor, inspiracional)",
+                },
             },
             "required": ["nome", "nicho"],
         },
@@ -78,8 +91,14 @@ TOOLS = [
             "type": "object",
             "properties": {
                 "cliente": {"type": "string", "description": "Nome do cliente"},
-                "tipo": {"type": "string", "description": "Tipo de conteudo (posts-midias-sociais ou criativos-anuncios)"},
-                "fase": {"type": "string", "description": "Fase (ideias, roteiros, brutos, editados, publicados)"},
+                "tipo": {
+                    "type": "string",
+                    "description": "Tipo de conteudo (posts-midias-sociais ou criativos-anuncios)",
+                },
+                "fase": {
+                    "type": "string",
+                    "description": "Fase (ideias, roteiros, brutos, editados, publicados)",
+                },
             },
             "required": ["cliente", "tipo", "fase"],
         },
@@ -104,8 +123,15 @@ TOOLS = [
             "properties": {
                 "cliente": {"type": "string", "description": "Nome do cliente"},
                 "video": {"type": "string", "description": "Caminho do video"},
-                "plataforma": {"type": "string", "enum": ["reels", "shorts", "tiktok"], "description": "Plataforma destino"},
-                "max_duracao": {"type": "number", "description": "Duracao maxima em segundos (padrao: 90)"},
+                "plataforma": {
+                    "type": "string",
+                    "enum": ["reels", "shorts", "tiktok"],
+                    "description": "Plataforma destino",
+                },
+                "max_duracao": {
+                    "type": "number",
+                    "description": "Duracao maxima em segundos (padrao: 90)",
+                },
             },
             "required": ["cliente", "video"],
         },
@@ -130,7 +156,11 @@ TOOLS = [
             "properties": {
                 "cliente": {"type": "string", "description": "Nome do cliente"},
                 "video": {"type": "string", "description": "Caminho do video"},
-                "formato": {"type": "string", "enum": ["srt", "json", "remotion", "todos"], "description": "Formato de saida (padrao: todos)"},
+                "formato": {
+                    "type": "string",
+                    "enum": ["srt", "json", "remotion", "todos"],
+                    "description": "Formato de saida (padrao: todos)",
+                },
             },
             "required": ["cliente", "video"],
         },
@@ -143,8 +173,14 @@ TOOLS = [
             "properties": {
                 "cliente": {"type": "string", "description": "Nome do cliente"},
                 "texto": {"type": "string", "description": "Texto para gerar voz"},
-                "arquivo": {"type": "string", "description": "Caminho do arquivo de texto"},
-                "voz_id": {"type": "string", "description": "ID da voz ElevenLabs (padrao: do .env.cliente)"},
+                "arquivo": {
+                    "type": "string",
+                    "description": "Caminho do arquivo de texto",
+                },
+                "voz_id": {
+                    "type": "string",
+                    "description": "ID da voz ElevenLabs (padrao: do .env.cliente)",
+                },
             },
             "required": ["cliente"],
         },
@@ -155,10 +191,12 @@ TOOLS = [
         "inputSchema": {
             "type": "object",
             "properties": {
-                "idioma": {"type": "string", "description": "Filtrar por idioma (ex: pt, en, es)"},
+                "idioma": {
+                    "type": "string",
+                    "description": "Filtrar por idioma (ex: pt, en, es)",
+                },
             },
         },
-    },
     },
     {
         "name": "neuro_trends",
@@ -185,7 +223,9 @@ def run_script(script_path: str, args: list) -> str:
     try:
         result = subprocess.run(
             ["python3", script_path] + args,
-            capture_output=True, text=True, timeout=120,
+            capture_output=True,
+            text=True,
+            timeout=120,
         )
         output = result.stdout.strip()
         if result.returncode != 0:
@@ -221,10 +261,14 @@ def handle_neuro_status(args: dict) -> str:
             for fase in ["ideias", "roteiros", "brutos", "editados", "publicados"]:
                 fase_dir = os.path.join(client_path, tipo, fase)
                 if os.path.isdir(fase_dir):
-                    count = len([f for f in os.listdir(fase_dir) if not f.startswith(".")])
+                    count = len(
+                        [f for f in os.listdir(fase_dir) if not f.startswith(".")]
+                    )
                     if count > 0:
                         items.append(f"{fase}: {count}")
-        result.append(f"{d} ({nicho}) | Plataformas: {', '.join(plataformas) if plataformas else 'nenhuma'} | Publicados: {total_pub}")
+        result.append(
+            f"{d} ({nicho}) | Plataformas: {', '.join(plataformas) if plataformas else 'nenhuma'} | Publicados: {total_pub}"
+        )
         if items:
             result.append("  " + " | ".join(items))
     return "\n".join(result) if result else "Nenhum cliente encontrado."
@@ -243,19 +287,37 @@ def handle_neuro_criar_cliente(args: dict) -> str:
     os.makedirs(os.path.join(base, "briefings"), exist_ok=True)
     os.makedirs(os.path.join(base, "metricas"), exist_ok=True)
     ctx = {
-        "cliente": {"nome": nome, "nicho": nicho, "plataformas": plataformas, "tom_de_voz": tom, "cta_padrao": "", "horarios_melhores": []},
+        "cliente": {
+            "nome": nome,
+            "nicho": nicho,
+            "plataformas": plataformas,
+            "tom_de_voz": tom,
+            "cta_padrao": "",
+            "horarios_melhores": [],
+        },
         "preferencias": {},
         "stories": [],
-        "metricas_resumo": {"total_publicados": 0, "avg_retention": "0%", "avg_engagement": "0%", "melhor_horario": "", "ultima_atualizacao": ""},
+        "metricas_resumo": {
+            "total_publicados": 0,
+            "avg_retention": "0%",
+            "avg_engagement": "0%",
+            "melhor_horario": "",
+            "ultima_atualizacao": "",
+        },
     }
     with open(os.path.join(base, "contexto.json"), "w", encoding="utf-8") as f:
         json.dump(ctx, f, indent=2, ensure_ascii=False)
     with open(os.path.join(base, "historico.json"), "w", encoding="utf-8") as f:
         json.dump({"entries": []}, f, indent=2)
     open(os.path.join(base, ".env.cliente"), "a").close()
-    template = os.path.join(os.path.dirname(os.path.abspath(__file__)), "templates", "env.cliente.template")
+    template = os.path.join(
+        os.path.dirname(os.path.abspath(__file__)), "templates", "env.cliente.template"
+    )
     if os.path.exists(template):
-        with open(template) as src, open(os.path.join(base, ".env.cliente"), "w") as dst:
+        with (
+            open(template) as src,
+            open(os.path.join(base, ".env.cliente"), "w") as dst,
+        ):
             dst.write(src.read())
     return f"Cliente '{nome}' criado em {base}"
 
@@ -310,7 +372,8 @@ def handle_neuro_legendas(args: dict) -> str:
     if "formato" in args:
         cmd_args += ["--formato", args["formato"]]
     return run_script(
-        os.path.join(SKILLS_DIR, "content-editing/scripts/generate_subtitles.py"), cmd_args
+        os.path.join(SKILLS_DIR, "content-editing/scripts/generate_subtitles.py"),
+        cmd_args,
     )
 
 
@@ -376,7 +439,18 @@ def main():
                 result = handler(params)
                 print(json.dumps({"content": [{"type": "text", "text": result}]}))
             else:
-                print(json.dumps({"content": [{"type": "text", "text": f"Ferramenta desconhecida: {tool_name}"}]}))
+                print(
+                    json.dumps(
+                        {
+                            "content": [
+                                {
+                                    "type": "text",
+                                    "text": f"Ferramenta desconhecida: {tool_name}",
+                                }
+                            ]
+                        }
+                    )
+                )
                 print(json.dumps({"isError": True}))
         else:
             print(json.dumps({"error": f"Metodo nao suportado: {method}"}))

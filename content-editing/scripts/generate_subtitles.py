@@ -87,7 +87,7 @@ def generate_with_openai_api(
     return _parse_openai_segments(data)
 
 
-def _extract_audio(video_path: str) -> str | None:
+def _extract_audio(video_path: str):
     output = os.path.splitext(video_path)[0] + ".mp3"
     try:
         subprocess.run(
