@@ -352,6 +352,25 @@ Aciona quando usuario digita `/continuar` ou `/continuar <cliente>`.
 - Gerar insights
 - Salvar aprendizados (stories) no contexto
 
+## Setup Completo do Sistema
+
+Para configurar TODO o ambiente (dependencias + workspace + APIs), execute:
+
+```bash
+bash ~/.opencode/skills/content-workflow/scripts/setup_completo.sh
+```
+
+Esse script instala automaticamente:
+- Dependencias do sistema (jq, ffmpeg, ffprobe)
+- Pacotes Python (requests, pytrends, python-dotenv, whisper, scenedetect)
+- Verifica Node.js e Remotion
+- Cria o workspace `~/conteudo/` com toda a estrutura
+- Gera `.gitignore` para proteger credenciais
+- Mostra guia completo de configuracao de cada API com passo a passo
+- Exibe resumo da instalacao
+
+Alternativa manual: veja `INSTALL.md` no repositorio do GitHub.
+
 ## Regras
 
 - Sempre carregar contexto do cliente antes de qualquer acao
